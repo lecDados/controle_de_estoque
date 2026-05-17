@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de estoque</title>
+</head>
+<body>
+
+    <div>
+
+        <input id="nome" type="text" placeholder="Nome">
+
+        <input id="valor" type="number" placeholder="Valor">
+
+        <button type="button" onclick="enviar()">
+            Enviar
+        </button>
+
+    </div>
+
+    <hr>
+
+    <div id="resultado"></div>
+
+</body>
+
+<script>
+
+    async function enviar(){
+
+        const nome = document.getElementById("nome").value;
+
+        const valor = document.getElementById("valor").value;
+
+        console.log("FRONTEND ENVIANDO");
+
+        try {
+
+            const response = await fetch("http://localhost:3000/lista", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    nome,
+                    valor
+                })
+
+            });
+
+            const data = await response.json();
+
+            console.log(data);
+
+            buscarDados();
+
+        } catch(error){
+
+            console.log(error);
+
+        }
+
+    }
+
+    async function buscarDados(){
+
+        try {
+
+            const response = await fetch("http://localhost:3000/lista");
+
+            const data = await response.json();
+
+            const resultado = document.getElementById("resultado");
+
+            resultado.innerHTML = "";
+
+            data.forEach((item) => {
+
+                resultado.innerHTML += `
+                    Nome: ${item.nome} <br>
+                    Valor: ${item.valor} <br><br>
+                `;
+
+            });
+
+        } catch(error){
+
+            console.log(error);
+
+        }
+
+    }
+
+    buscarDados();
+
+</script>
+
+</html>

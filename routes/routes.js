@@ -1,23 +1,10 @@
 import express from "express";
-import { hello } from "../controller/saldacao.js";
+import { listarItens, criarItem } from "../controller/listaItem.js";
 
+const router = express.Router();
 
-const router = express.Router()
+router.get("/lista", listarItens);
 
+router.post("/lista", criarItem);
 
-
-    router.get("/", hello); //teste com saldacao
-
-
-
-
-
-
-
-
-
-
-
-
-export default router
-
+export default router;
