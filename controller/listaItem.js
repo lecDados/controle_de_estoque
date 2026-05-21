@@ -1,4 +1,5 @@
 import Itens from "../config/estoque.js";
+import total from "./total.js";
 
 async function criarItem(req, res){
 
@@ -7,11 +8,12 @@ async function criarItem(req, res){
 
     console.log(req.body);
 
-    const { nome, valor } = req.body;
+    const { nome, valor, quantidade, } = req.body;
 
     await Itens.create({
         nome,
-        valor
+        valor,
+        quantidade
     });
 
     res.json({
@@ -28,4 +30,10 @@ async function listarItens(req, res){
 
 }
 
-export {listarItens, criarItem}
+async function mostrar_total(req, res){
+    res.json({
+        mostra_total: total
+    });
+}
+
+export {listarItens, criarItem, mostrar_total}

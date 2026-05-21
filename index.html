@@ -7,17 +7,27 @@
 </head>
 <body>
 
-    <div>
-
+    <section style="display: flex; flex-direction: flex;">
+    <div style="display: flex; flex-direction: column; max-width: 200px; gap: 4px;">
+        <p>Novo item</p>
         <input id="nome" type="text" placeholder="Nome">
-
+        
         <input id="valor" type="number" placeholder="Valor">
+        
+        <input id="quantidade" type="number" placeholder="Quantidade">
 
         <button type="button" onclick="enviar()">
             Enviar
         </button>
 
     </div>
+    <hr>
+    <div>
+        <p>Valor em Produto:</p>
+        <div id="mostrar_total"> </div>
+
+    </div>
+    </section>
 
     <hr>
 
@@ -33,6 +43,8 @@
 
         const valor = document.getElementById("valor").value;
 
+        const quantidade = document.getElementById("quantidade").value;
+
         console.log("FRONTEND ENVIANDO");
 
         try {
@@ -47,7 +59,8 @@
 
                 body: JSON.stringify({
                     nome,
-                    valor
+                    valor,
+                    quantidade
                 })
 
             });
@@ -71,10 +84,17 @@
         try {
 
             const response = await fetch("http://localhost:3000/lista");
-
+            const dado_total = await fetch("http://localhost:3000/total")
+            
             const data = await response.json();
+            const total_json = await dado_total.json();
 
             const resultado = document.getElementById("resultado");
+            const mostrar_total = document.getElementById("mostrar_total");
+
+            
+
+            mostrar_total.innerHTML = total_json.mostra_total;
 
             resultado.innerHTML = "";
 
@@ -82,7 +102,8 @@
 
                 resultado.innerHTML += `
                     Nome: ${item.nome} <br>
-                    Valor: ${item.valor} <br><br>
+                    Valor: ${item.valor} <br>
+                    Quantidade: ${ item.valor} <br> <hr>
                 `;
 
             });
