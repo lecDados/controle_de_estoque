@@ -38,85 +38,82 @@
 <script>
 
     async function enviar(){
+            
+            const nome = document.getElementById("nome").value;
+            const valor = document.getElementById("valor").value;
+            const quantidade = document.getElementById("quantidade").value;
 
-        const nome = document.getElementById("nome").value;
 
-        const valor = document.getElementById("valor").value;
+                    const resposta = await fetch("http://localhost:3000/criar",{
+                        
 
-        const quantidade = document.getElementById("quantidade").value;
+                        method: "POST",
 
-        console.log("FRONTEND ENVIANDO");
 
-        try {
+                        headers:{
+                            "Content-Type": "application/json"
+                        },
 
-            const response = await fetch("http://localhost:3000/lista", {
+                        body: JSON.stringify({
+                            nome,
+                            valor,
+                            quantidade 
+                        })
 
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    nome,
-                    valor,
-                    quantidade
                 })
-
-            });
-
-            const data = await response.json();
-
-            console.log(data);
-
-            buscarDados();
-
-        } catch(error){
-
-            console.log(error);
-
-        }
-
+                total() 
+                buscar()
     }
 
-    async function buscarDados(){
+    
+    async function buscar() {
 
-        try {
+        const resposta = await fetch("http://localhost:3000/lista");
 
-            const response = await fetch("http://localhost:3000/lista");
-            const dado_total = await fetch("http://localhost:3000/total")
-            
-            const data = await response.json();
-            const total_json = await dado_total.json();
+        
+        const dados = await resposta.json();
 
-            const resultado = document.getElementById("resultado");
-            const mostrar_total = document.getElementById("mostrar_total");
+        const resultado = document.getElementById("resultado");
 
-            
+        resultado.innerHTML="";
 
-            mostrar_total.innerHTML = total_json.mostra_total;
 
-            resultado.innerHTML = "";
-
-            data.forEach((item) => {
-
-                resultado.innerHTML += `
-                    Nome: ${item.nome} <br>
-                    Valor: ${item.valor} <br>
-                    Quantidade: ${ item.valor} <br> <hr>
-                `;
-
-            });
-
-        } catch(error){
-
-            console.log(error);
-
-        }
-
+                dados.forEach(item => {
+                    resultado.innerHTML += `
+                    
+                    <p> nome: ${item.nome}</p>
+                    
+                    <button type="button" onclick="but()">
+                    hello
+                </button>
+                    
+                    <hr>
+                    ` 
+                });  
+    }
+    buscar()
+    
+    function but(){
+        alert("hello!");
     }
 
-    buscarDados();
+    async function total() {
+        
+        const mostrar_total = document.getElementById("mostrar_total");
+
+        const resposta = await fetch("http://localhost:3000/lista")
+
+        const dados = await resposta.json()
+
+        mostrar_total.innerHTML = "";
+        let valores = 0
+        dados.forEach(item=>{
+            valores += item.valor
+            mostrar_total.innerHTML = `Total: ${valores}`
+        })
+    }
+    total()
+    
 
 </script>
 

@@ -1,13 +1,12 @@
 import express from "express";
-import { listarItens, criarItem, mostrar_total } from "../controller/listaItem.js";
+import { criar } from "../controller/dados_itens.js";
+import { mostrar } from "../controller/mostrar.js";
+
 
 
 const router = express.Router();
 
-router.get("/lista", listarItens);
-
-router.get("/total", mostrar_total);
-
-router.post("/lista", criarItem);
+router.post("/criar", criar );
+router.get("/lista", mostrar);
 
 export default router;
