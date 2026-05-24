@@ -82,10 +82,11 @@
                     resultado.innerHTML += `
                     
                     <p> nome: ${item.nome}</p>
+                    <p> id: ${item._id}</p>
                     
-                    <button type="button" onclick="but()">
-                    hello
-                </button>
+                    <button type="button" onclick="delet('${item._id}')">
+                    delet
+                    </button>
                     
                     <hr>
                     ` 
@@ -93,9 +94,17 @@
     }
     buscar()
     
-    function but(){
-        alert("hello!");
-    }
+                                                            async function delet(_id){
+
+                                                            await fetch(`http://localhost:3000/lista/${_id}`,{
+
+
+                                                                    method: "DELETE"
+                                                            })
+
+                                                            buscar()
+                                                            total()
+                                                            }
 
     async function total() {
         
@@ -105,13 +114,19 @@
 
         const dados = await resposta.json()
 
-        mostrar_total.innerHTML = "";
+        mostrar_total.innerHTML = "Total: 0";
+
         let valores = 0
+
         dados.forEach(item=>{
+
             valores += item.valor
+
             mostrar_total.innerHTML = `Total: ${valores}`
+
         })
     }
+
     total()
     
 
