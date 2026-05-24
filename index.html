@@ -7,33 +7,58 @@
 </head>
 <body>
 
-    <section style="display: flex; flex-direction: flex;">
-    <div style="display: flex; flex-direction: column; max-width: 200px; gap: 4px;">
-        <p>Novo item</p>
-        <input id="nome" type="text" placeholder="Nome">
-        
-        <input id="valor" type="number" placeholder="Valor">
-        
-        <input id="quantidade" type="number" placeholder="Quantidade">
+                    <section style="display: flex; flex-direction: flex; gap: 40px;">
 
-        <button type="button" onclick="enviar()">
-            Enviar
-        </button>
 
-    </div>
-    <hr>
-    <div>
-        <p>Valor em Produto:</p>
-        <div id="mostrar_total"> </div>
 
-    </div>
-    </section>
 
-    <hr>
+                    <fieldset>
+                    <div style="display: flex; flex-direction: column; max-width: 200px; gap: 4px;">
+                    <p>Novo item</p>
+                    <label for="text">Nome:</label>
+                    <input id="nome" type="text" placeholder="Nome">
+                    <label for="text">R$:</label>
+                    <input id="valor" type="number" placeholder="Valor">
+                    <label for="text">Quantidade:</label>
+                    <input id="quantidade" type="number" placeholder="Quantidade">
 
-    <div id="resultado"></div>
+                    <button type="button" onclick="enviar()">
+                        Enviar
+                    </button>
+                    </fieldset>
+
+                    </div>
+
+
+
+
+                    <fieldset>
+                    <div>
+                    <p>Valor em Produto:</p>
+                    <div id="mostrar_total"> </div>
+
+                    </div>
+                    </fieldset>
+
+
+
+
+
+                    <fieldset>
+                    <div>
+                        <p>Quantidade:</p>
+                    <div id="quantidade_item"></div>
+                    </div>
+                    </fieldset>
+                    </section>
+
+                    <hr>
+
+                    <div id="resultado"></div>
 
 </body>
+
+
 
 <script>
 
@@ -61,12 +86,14 @@
                         })
 
                 })
-                total() 
-                buscar()
+
+
+    buscar()
+    
     }
 
     
-    async function buscar() {
+        async function buscar() {
 
         const resposta = await fetch("http://localhost:3000/lista");
 
@@ -90,9 +117,16 @@
                     
                     <hr>
                     ` 
-                });  
+                }); 
+
+
+total()
+quantidade() 
+
+
     }
-    buscar()
+
+buscar()
     
                                                             async function delet(_id){
 
@@ -102,33 +136,67 @@
                                                                     method: "DELETE"
                                                             })
 
-                                                            buscar()
-                                                            total()
+
+buscar()
+
+    
+
                                                             }
 
-    async function total() {
-        
-        const mostrar_total = document.getElementById("mostrar_total");
+                async function total() {
+                
+                const mostrar_total = document.getElementById("mostrar_total");
 
-        const resposta = await fetch("http://localhost:3000/lista")
+                const resposta = await fetch("http://localhost:3000/lista")
 
-        const dados = await resposta.json()
+                const dados = await resposta.json()
 
-        mostrar_total.innerHTML = "Total: 0";
+                mostrar_total.innerHTML = "Total: R$ 0";
 
-        let valores = 0
+                let valores = 0
 
-        dados.forEach(item=>{
+                dados.forEach(item=>{
 
-            valores += item.valor
+                    valores += item.valor
 
-            mostrar_total.innerHTML = `Total: ${valores}`
+                    mostrar_total.innerHTML = `Total: R$ ${valores}`
 
-        })
+                })
     }
 
-    total()
+
+total()
+
+                        async function quantidade(){
     
+
+                        const quantidade = document.getElementById("quantidade_item");
+
+
+                        quantidade.innerHTML = "Itens: 0";
+
+                const resposta = await fetch("http://localhost:3000/lista")
+
+                const dados = await resposta.json()
+
+                let total = 0
+                
+
+                dados.forEach(item=>{
+
+                    total += item.quantidade;
+
+                });
+
+
+                quantidade.innerHTML = `Itens: ${total}`
+buscar()
+}
+
+quantidade()
+      
+     
+
 
 </script>
 
