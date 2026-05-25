@@ -7,7 +7,7 @@
 </head>
 <body>
 
-                    <section style="display: flex; flex-direction: flex; gap: 40px;">
+                    <section style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; ">
 
 
 
@@ -21,6 +21,17 @@
                     <input id="valor" type="number" placeholder="Valor">
                     <label for="text">Quantidade:</label>
                     <input id="quantidade" type="number" placeholder="Quantidade">
+                    
+                    
+                    <select name="categoria" id="categoria">
+
+                        <option value="acessorio">acessorios</option>
+
+                        <option value="objeto">Objetos</option>
+
+                        <option value="roupa">Roupas</option>
+
+                    </select>
 
                     <button type="button" onclick="enviar()">
                         Enviar
@@ -52,6 +63,16 @@
                     </fieldset>
                     </section>
 
+                    <main style="display: flex; flex-direction: row; gap: 100px; justify-content: center; padding-top:40px ;">
+
+
+                    <button onclick="Acessorios()">Acessorios</button>
+                    <button onclick="Objetos()">Objetos</button>
+                    <button onclick="Roupas()">Roupas</button>
+
+
+                    </main>
+
                     <hr>
 
                     <div id="resultado"></div>
@@ -67,6 +88,7 @@
             const nome = document.getElementById("nome").value;
             const valor = document.getElementById("valor").value;
             const quantidade = document.getElementById("quantidade").value;
+            const categoria = document.getElementById("categoria").value;
 
 
                     const resposta = await fetch("http://localhost:3000/criar",{
@@ -82,7 +104,8 @@
                         body: JSON.stringify({
                             nome,
                             valor,
-                            quantidade 
+                            quantidade,
+                            categoria,
                         })
 
                 })
@@ -107,15 +130,14 @@
 
                 dados.forEach(item => {
                     resultado.innerHTML += `
-                    
+                    <fieldset>
                     <p> nome: ${item.nome}</p>
-                    <p> id: ${item._id}</p>
-                    
+         
                     <button type="button" onclick="delet('${item._id}')">
                     delet
                     </button>
+                    </fieldset>
                     
-                    <hr>
                     ` 
                 }); 
 
@@ -173,7 +195,7 @@ total()
                         const quantidade = document.getElementById("quantidade_item");
 
 
-                        quantidade.innerHTML = "Itens: 0";
+                        
 
                 const resposta = await fetch("http://localhost:3000/lista")
 
@@ -190,12 +212,65 @@ total()
 
 
                 quantidade.innerHTML = `Itens: ${total}`
-buscar()
 }
 
 quantidade()
       
-     
+
+async  function Acessorios(){
+
+    const resposta = await fetch("http://localhost:3000/acessorios");
+
+    const dados = await resposta.json();
+
+    const resultado = document.getElementById("resultado");
+
+        resultado.innerHTML="";
+    
+        dados.forEach(item=>{
+
+            resultado.innerHTML += `
+            <fieldset>
+                <p>Nome: ${item.nome}</p>
+                <p>Valor: ${item.valor}</p>
+                <p>Quant.: ${item.quantidade}</p>
+                <button type="button" onclick="delet('${item._id}')">
+                    delet
+                    </button>
+            </fieldset>
+            `
+        })
+
+}
+
+async  function Roupas(){
+
+    const resposta = await fetch("http://localhost:3000/roupa");
+
+    const dados = await resposta.json();
+
+    const resultado = document.getElementById("resultado");
+
+        resultado.innerHTML="";
+    
+        dados.forEach(item=>{
+
+            resultado.innerHTML += `
+
+            <fieldset>
+                <p>Nome: ${item.nome}</p>
+                <p>Valor: ${item.valor}</p>
+                <p>Quant.: ${item.quantidade}</p>
+
+
+                <button type="button" onclick="delet('${item._id}')">
+                    delet
+                    </button>
+            </fieldset>
+            `
+        })
+
+}
 
 
 </script>

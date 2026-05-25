@@ -6,6 +6,7 @@ const item = new mongoose.Schema({
     nome: String,
     valor: Number,
     quantidade: Number,
+    categoria: String,
 });
 
 const Itens = mongoose.model("Itens", item);
