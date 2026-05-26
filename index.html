@@ -273,6 +273,37 @@ async  function Roupas(){
 }
 
 
+
+async  function Objetos(){
+
+    const resposta = await fetch("http://localhost:3000/objeto");
+
+    const dados = await resposta.json();
+
+    const resultado = document.getElementById("resultado");
+
+        resultado.innerHTML="";
+    
+        dados.forEach(item=>{
+
+            resultado.innerHTML += `
+
+            <fieldset>
+                <p>Nome: ${item.nome}</p>
+                <p>Valor: ${item.valor}</p>
+                <p>Quant.: ${item.quantidade}</p>
+
+
+                <button type="button" onclick="delet('${item._id}')">
+                    delet
+                    </button>
+            </fieldset>
+            `
+        })
+
+}
+
+
 </script>
 
 </html>
