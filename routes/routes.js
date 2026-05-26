@@ -6,6 +6,7 @@ import quantidade from "../controller/quantidade.js";
 import acessorio from "../controller/acessorio.js";
 import roupa from "../controller/roupa.js";
 import objeto from "../controller/objeto.js";
+import repo from "../controller/repo.js";
 
 
 
@@ -22,6 +23,8 @@ router.get("/lista", quantidade)
 router.get("/acessorios", acessorio)
 router.get("/roupa", roupa);
 router.get("/objeto", objeto);
+
+router.get("/repor", repo);
 
 
 export default router;
