@@ -10,12 +10,12 @@
 <body>
 
 
-                    <section style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; ">
+                    <section class="inferior" >
 
 
 
 
-                    <fieldset>
+                    <fieldset class="entrada">
                     <div  style="display: flex; flex-direction: column; max-width: 200px; gap: 4px;">
                     <p>Novo item</p>
                     <label  for="text">Nome:</label>
@@ -46,7 +46,7 @@
 
 
 
-                    <fieldset>
+                    <fieldset class="entrada" >
                     <div>
                     <p>Valor em Produto:</p>
                     <div id="mostrar_total"> </div>
@@ -58,7 +58,7 @@
 
 
 
-                    <fieldset>
+                    <fieldset class="entrada">
                     <div>
                         <p>Quantidade:</p>
                     <div id="quantidade_item"></div>
@@ -66,7 +66,7 @@
                     </fieldset>
                     </section>
 
-                    <main style="flex-wrap: wrap; padding-top: 40px;">
+                    <main class="buts">
 
 
                     <button class="bt_comum" onclick="Acessorios()">Acessorios</button>
@@ -84,46 +84,55 @@
 </body>
 
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
     async function enviar(){
-            
-            const nome = document.getElementById("nome").value;
-            const valor = parseFloat(document.getElementById("valor").value);
-            const quantidade = parseInt(document.getElementById("quantidade").value);
-            const categoria = document.getElementById("categoria").value;
 
-            
-                const total_item =  valor * quantidade
-                
-            
+    const nome = document.getElementById("nome").value;
+    const valor = parseFloat(document.getElementById("valor").value);
+    const quantidade = parseInt(document.getElementById("quantidade").value);
+    const categoria = document.getElementById("categoria").value;
 
+    if(!nome){
+        await Swal.fire({
+            title: "Insira os dados",
+            icon: "warning",
+            confirmButtonText: "voltar",
+            confirmButtonColor: "rgb(194, 36, 89)"
+        });
 
-                    const resposta = await fetch("http://localhost:3000/criar",{
-                        
-
-                        method: "POST",
-
-
-                        headers:{
-                            "Content-Type": "application/json"
-                        },
-
-                        body: JSON.stringify({
-                            nome,
-                            valor,
-                            quantidade,
-                            categoria,
-                            total_item,
-                        })
-
-                })
-
-
-    buscar()
-    
+        return;
     }
+
+    const total_item = valor * quantidade;
+
+    await fetch("http://localhost:3000/criar", {
+
+        method: "POST",
+
+        headers:{
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            nome,
+            valor,
+            quantidade,
+            categoria,
+            total_item,
+        })
+    });
+
+    await buscar();
+
+    Swal.fire({
+        title: "Criado com sucesso",
+        icon: "success",
+        confirmButtonText: "voltar",
+        confirmButtonColor: "rgb(194, 36, 89)"
+    });
+}
 
     
         async function buscar() {
@@ -140,15 +149,16 @@
 
                 dados.forEach(item => {
                     resultado.innerHTML += `
-                    <fieldset>
-                    <p> nome: ${item.nome}</p>
-         
-                    <button  class="bt_delet" type="button" onclick="delet('${item._id}')">
-                    delet =>
+            <fieldset class="mostrarpadrao">
+                <p>Nome: ${item.nome}</p>
+                <p>Valor cada: R$ ${item.valor}</p>
+                <p>Quant.: ${item.quantidade}</p>
+                <p>Valor total.: R$ ${item.total_item.toFixed(2)}</p>
+                <button class="bt_delet" type="button" onclick="delet('${item._id}')">
+                    delet
                     </button>
-                    </fieldset>
-                    
-                    ` 
+            </fieldset>
+            ` 
                 }); 
 
 
@@ -162,18 +172,38 @@ buscar()
     
                                                             async function delet(_id){
 
-                                                            await fetch(`http://localhost:3000/lista/${_id}`,{
+    const resposta = await Swal.fire({
 
+        title: "Deseja deletar?",
+        text: "Essa ação não poderá ser desfeita.",
+        icon: "warning",
+        
 
-                                                                    method: "DELETE"
-                                                            })
+        showCancelButton: true,
 
+        confirmButtonText: "Sim",
+        cancelButtonText: "Cancelar",
 
-buscar()
+        confirmButtonColor: "rgb(194, 36, 89)"
+    });
 
-    
+    if(!resposta.isConfirmed){
+        return;
+    }
 
-                                                            }
+    await fetch(`http://localhost:3000/lista/${_id}`, {
+
+        method: "DELETE"
+    });
+
+    Swal.fire({
+        title: "Deletado!",
+        icon: "success",
+        confirmButtonColor: "rgb(194, 36, 89)"
+    });
+
+    buscar();
+}
 
                 async function total() {
                 
@@ -245,7 +275,7 @@ async  function Acessorios(){
         dados.forEach(item=>{
 
             resultado.innerHTML += `
-            <fieldset>
+            <fieldset class="mostrarpadrao">
                 <p>Nome: ${item.nome}</p>
                 <p>Valor cada: R$ ${item.valor}</p>
                 <p>Quant.: ${item.quantidade}</p>
@@ -273,7 +303,7 @@ async  function Roupas(){
 
             resultado.innerHTML += `
 
-            <fieldset>
+            <fieldset class="mostrarpadrao">
                 <p>Nome: ${item.nome}</p>
                 <p>Valor cada: R$ ${item.valor}</p>
                 <p>Quant.: ${item.quantidade}</p>
@@ -305,7 +335,7 @@ async  function Objetos(){
 
             resultado.innerHTML += `
 
-            <fieldset>
+            <fieldset class="mostrarpadrao">
                 <p>Nome: ${item.nome}</p>
                 <p>Valor cada: R$ ${item.valor}</p>
                 <p>Quant.: ${item.quantidade}</p>
@@ -337,14 +367,21 @@ async function Repor() {
 
         resultado.innerHTML += `
 
-            <fieldset>
-                <p>Nome: ${item.nome}</p>
-                <p>Valor cada: R$ ${item.valor}</p>
-                <p>Quant.: ${item.quantidade}</p>
-                <p class="negativo">Valor total.: R$ ${item.total_item.toFixed(2)}</p>
-            </fieldset>
-            `
+<fieldset class="mostrarpadrao">
+
+    <p>Nome: ${item.nome}</p>
+    <p>Valor cada: R$ ${item.valor}</p>
+    <p>Quant.: ${item.quantidade}</p>
+    <p class="negativo">
+        Valor total.: R$ ${item.total_item.toFixed(2)}
+    </p>
+
+    
+
+</fieldset>
+`
     });
+
 }
 
 </script>
