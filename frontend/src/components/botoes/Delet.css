@@ -1,0 +1,19 @@
+.delet{
+    background-color: var(--121212);
+    padding: 7px 20px;
+    color: #e6f7ec;
+    border: solid 1px var(--border);
+    border-radius: 30px;
+    
+    margin: 10px;
+    gap: 10px;
+    display: flex;
+    position: absolute;
+    right: 10px;
+   
+}
+.delet:hover{
+
+    background-image: linear-gradient(135deg, #121212);
+    cursor: pointer;
+}

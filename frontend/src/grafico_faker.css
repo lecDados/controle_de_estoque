@@ -1,0 +1,24 @@
+.grafico{
+    width: 200px;
+    height: 160px;
+    background: #121212;
+    border-radius: 20px;
+    padding: 20px;
+    border: solid 1px var(--border);
+
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.barra{
+    flex: 1;
+    background: #22C55E;
+    border-radius: 8px 8px 0 0;
+}
+
+.barra1{ height: 40px; }
+.barra2{ height: 120px; }
+.barra3{ height: 80px; }
+.barra4{ height: 160px; }
+.barra5{ height: 100px; }

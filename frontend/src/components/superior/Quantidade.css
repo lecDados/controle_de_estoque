@@ -1,0 +1,37 @@
+.Quantidade{
+    background-image: linear-gradient(135deg, #222222);
+    width: 350px;
+    height: 160px;
+    border-radius: 30px;
+    position: relative;
+    border: solid 1px #424242;
+    
+}
+.fa-solid {
+color: #bdf5cbe1;
+position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.Quantidade p{
+    color: white;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1;
+   
+    
+    
+}
+.Quantidade h3{
+    color: #A1A1AA;
+    font-size: 14px;
+    font-weight: 500;
+}
+.Quantidade i{
+    background-color: #a7a3a35d;
+    width: 40px;
+    height: 40px;
+    align-content: center;
+    text-align: center;
+    border-radius: 100px;
+}

@@ -17,7 +17,7 @@ router.get("/lista", mostrar);
 
 
 router.delete("/lista/:_id", deletar);
-router.get("/lista", quantidade)
+router.get("/quantidade", quantidade)
 
 
 router.get("/acessorios", acessorio)

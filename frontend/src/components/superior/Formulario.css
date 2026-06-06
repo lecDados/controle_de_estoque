@@ -1,0 +1,23 @@
+.formulario{
+    border: solid 1px #424242;
+    max-width: 200px;
+    background-image: linear-gradient(135deg, #222222);
+    border-radius:30px;
+}
+.formulario input{
+    background: #121212;
+    border: 1px solid #2A2A2A;
+    border-radius: 20px;
+
+
+    
+    
+    color: #000;
+    padding: 10px 10px;
+    
+    outline: none;
+}
+.formulario label{
+    color: rgba(255, 255, 255, 0.692);
+    font-size: 15px;
+}

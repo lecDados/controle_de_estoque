@@ -1,0 +1,14 @@
+#Enviar{
+    background-image: linear-gradient(135deg, #2468cf);
+    padding: 7px 20px;
+    color: #e6f7ec;
+    border: solid 1px #f6fdf900;
+    border-radius: 30px;
+    box-shadow: 1px 1px 7px #00000059;
+    margin: 10px;
+}
+#Enviar:hover{
+
+    background-image: linear-gradient(135deg, #2a94d1f1);
+    cursor: pointer;
+}
